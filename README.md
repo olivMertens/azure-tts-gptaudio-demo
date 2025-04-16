@@ -13,7 +13,17 @@ A demo project for experimenting with the Azure OpenAI GPT-4o Mini TTS (Text-to-
 ### Prerequisites
 
 - Python 3.8+
-- An Azure OpenAI resource with access to the GPT-4o Mini TTS model
+- An Azure OpenAI resource created in `eastus2` with GPT-4o Mini TTS model deployed as a Global Standard deployment type
+
+### Deploy GPT-4o Mini TTS Model with Azure AI Foundry
+Quickly deploy the GPT-4o Mini TTS model:
+1. Sign in to the [Azure AI Foundry portal](https://ai.azure.com/).
+2. Navigate to **Catalog**, filter by **Azure OpenAI**, and select `gpt-4o-mini-tts`.
+3. Click **Deploy**, choose or create your resource, and enter a deployment name.
+
+Click **Deploy** again to finalize.
+
+For detailed instructions, see the [full deployment guide](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/deploy-models-openai).
 
 ### Installation
 
