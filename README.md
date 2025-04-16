@@ -2,6 +2,8 @@
 
 A demo project for experimenting with the Azure OpenAI GPT-4o Mini TTS (Text-to-Speech) API. Includes a Gradio-powered soundboard UI and sample scripts for generating speech from text using a variety of voices and vibes.
 
+![AOAI TTS Soundboard](assets/aoai-tts-soundboard.gif)
+
 ## Features
 
 - Interactive Gradio soundboard to try different voices and vibes

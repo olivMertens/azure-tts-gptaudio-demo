@@ -310,6 +310,7 @@ brand_theme = gr.themes.Default(
 with gr.Blocks(
     css=css,
     theme=brand_theme,
+    title="Azure OpenAI TTS Audio Soundboard"
 ) as demo:
     with gr.Row():
         gr.HTML(
