@@ -665,7 +665,7 @@ def update_vibe_and_global(vibe, current_vibes):
     updated_buttons, updated_state = update_selected_vibe(vibe, current_vibes)
     return (desc, *updated_buttons, updated_state, script)
 
-def generate_random_content():
+async def generate_random_content():
     """Generate random audio content using GPT-5 Nano with 3 different use cases"""
     try:
         import random
@@ -693,7 +693,7 @@ def generate_random_content():
         selected_use_case = random.choice(use_cases)
         
         # Generate content using GPT-5 Nano via Azure OpenAI
-        response = azure.chat.completions.create(
+        response = await azure.chat.completions.create(
             model=os.getenv("AZURE_OPENAI_NANO_DEPLOYMENT_NAME", "gpt-5-nano"),
             messages=[
                 {
@@ -753,7 +753,7 @@ with gr.Blocks(
         gr.HTML(
             '''
             <div style="text-align: center;">
-                <h1 style="color: #2d3748; margin-bottom: 10px;">Azure OpenAI TTS Soundboard</h1>
+                <h1 style="color: #2d3748; margin-bottom: 10px;">Azure OpenAI - Gpt-Audio TTS Soundboard</h1>
                 <p style="color: #718096; font-size: 16px;">Create engaging audio content with AI-powered text-to-speech</p>
             </div>
             '''
@@ -841,9 +841,9 @@ with gr.Blocks(
         )
         
         # Generate random content button handler
-        def handle_generate_content():
+        async def handle_generate_content():
             try:
-                return generate_random_content()
+                return await generate_random_content()
             except Exception as e:
                 return f"Error: {str(e)}", "Please check your connection and try again."
         
