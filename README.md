@@ -2,27 +2,23 @@
 
 A comprehensive demonstration of Azure OpenAI's GPT-Audio text-to-speech capabilities using the latest `gpt-audio` model with chat completions API. This demo features a modern dark-themed interface with an interactive soundboard, multiple voice options, vibe selection, and AI-powered random content generation using GPT-5 Nano.
 
-<!-- GitHub supports direct video links that auto-embed as players -->
 
-![Azure TTS GPTAudio Demo](assets/gptaudio-demorepo.gif)
+![Azure TTS GPTAudio Demo](assets/gptaudiocapturescreen.png)
 
-<!-- Alternative: If you have an MP4, you can also use: -->
-<!--
-Upload your MP4 to GitHub Issues/Discussions as an attachment, then copy the URL:
-![Demo Video](https://user-images.githubusercontent.com/your-video-url.mp4)
-
-Or use the assets folder approach:
-<img src="assets/gptaudio-demorepo.mp4" width="800" alt="Azure TTS GPTAudio Demo" />
--->
 
 ## Features
 
 - 🎤 **11 Voice Options**: Choose from Alloy, Ash, Ballad, Coral, Echo, Fable, Nova, Onyx, Sage, Shimmer, and Verse
 - 🎭 **Vibe System**: Select different content vibes (Confident, Excited, Friendly, etc.)
-- 🤖 **AI-Powered Content Generation**: Dynamic content creation using GPT-5 Nano for three scenarios:
-  - 🧸 Children's stories with moral lessons
-  - 📊 Professional financial reports
-  - 🎧 Engaging technology podcasts
+
+- 🤖 **AI-Powered Multilingual Content Generation**: Dynamic content creation using GPT-5 Nano across multiple languages and scenarios:
+  - 🧸 Children's stories with moral lessons (English)
+  - 📊 Professional financial reports (English)  
+  - 🎧 Engaging technology podcasts (English)
+  - 📞 Insurance consultations (English)
+  - 🇫🇷 French news bulletins (Actualités françaises)
+  - 🇪🇸 Spanish cooking recipes (Recetas españolas)
+  - 🇲🇦 Moroccan cultural stories (حكايات مغربية)
 - 🎵 **Real-time Audio Generation**: Stream audio directly using Azure OpenAI's gpt-audio model
 - 🔄 **Random Voice Selection**: Automatically select random voices for varied audio experiences
 - � **Modern Dark Theme**: Professional dark interface optimized for large viewports with excellent readability
@@ -166,11 +162,15 @@ The interface features a modern dark theme optimized for large viewports with ex
 2. **Choose Vibe**: Select a content vibe that matches your desired tone (highlighted in purple when active)
 3. **Generate Content**:
    - Use existing script text, or
-   - Click "🎪 Generate Random Content" for AI-generated content using GPT-5 Nano
-   - Each click randomly generates one of three content types:
-     - 🧸 **Children's Story**: Warm, educational tales with moral lessons
-     - 📊 **Financial Report**: Professional business presentations
-     - 🎧 **Tech Podcast**: Conversational technology discussions
+   - Click "🤖 Generate Random Content (GPT-5 Nano)" for AI-generated content
+   - Each click randomly generates one of seven multilingual content types:
+     - 🧸 **Children's Story**: Warm, educational tales with moral lessons (English)
+     - 📊 **Financial Report**: Professional business presentations (English)
+     - 🎧 **Tech Podcast**: Conversational technology discussions (English)
+     - 📞 **Insurance Consultation**: Friendly customer service interactions (English)
+     - 🇫🇷 **French News**: Professional news bulletins in French
+     - 🇪🇸 **Spanish Recipes**: Traditional cooking instructions in Spanish
+     - 🇲🇦 **Moroccan Stories**: Cultural tales in Arabic
 4. **Generate Audio**: Click "🎵 Generate Audio" to create speech with your selected voice and content
 5. **Random Selection**: Use "🎲 Random Voice" to automatically pick a voice
 
@@ -214,27 +214,49 @@ Choose from various vibes to set the right tone:
 
 ### AI-Powered Content Generation
 
-The "🎪 Generate Random Content" button uses GPT-5 Nano to create dynamic, fresh content:
+The "🤖 Generate Random Content (GPT-5 Nano)" button uses GPT-5 Nano to create dynamic, multilingual content across seven different content types:
 
-**🧸 Children's Stories**
+
+**🧸 Children's Stories (English)**
 
 - Warm, educational tales with clear moral lessons
 - Child-friendly language optimized for TTS
 - Engaging characters and simple narratives
 
-**📊 Financial Reports**
 
+**📊 Financial Reports (English)**
 - Professional quarterly business summaries
 - Realistic metrics, percentages, and data
 - Authoritative tone suitable for investor presentations
 
-**🎧 Tech Podcasts**
+
+**🎧 Tech Podcasts (English)**
 
 - Conversational discussions about emerging technology
 - Informative yet engaging podcast-style content
 - Natural speaking patterns with enthusiasm and examples
 
-Each click generates completely new content using AI, ensuring variety and freshness in your audio testing.
+**📞 Insurance Consultations (English)**
+- Friendly customer service interactions
+- Professional yet approachable communication style
+- Helpful advice and clear explanations
+
+**🇫🇷 French News Bulletins**
+- Professional news reports in authentic French
+- Current events with proper French journalistic style
+- Cultural context and appropriate formal language
+
+**🇪🇸 Spanish Cooking Recipes**
+- Traditional recipes with detailed Spanish instructions
+- Authentic culinary terms and cooking techniques
+- Cultural food traditions and preparation methods
+
+**🇲🇦 Moroccan Arabic Stories**
+- Cultural tales featuring Moroccan traditions
+- Arabic language with regional authenticity
+- Rich storytelling reflecting North African heritage
+
+Each click generates completely new content using AI, ensuring variety and freshness in your multilingual audio testing.
 
 ## API Configuration
 
@@ -273,7 +295,7 @@ azure-tts-gptaudio-demo/
 ├── .gitignore                      # Git ignore rules
 └── assets/                         # UI assets and icons
     ├── ai_studio_icon_color.png
-    ├── aoai-tts-soundboard.gif
+    ├── gptaudiocapturescreen.png
     └── *.svg
 ```
 
