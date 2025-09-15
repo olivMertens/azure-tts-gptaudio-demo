@@ -25,16 +25,16 @@ A comprehensive demonstration of Azure OpenAI's GPT-Audio text-to-speech capabil
 
 - Python 3.8+
 - Azure OpenAI Service subscription
-- Access to the `gpt-audio` model (requires approval)
-- Access to GPT-5 Nano model (optional, for dynamic content generation)
+- Access to the `gpt-audio`
+- Access to GPT-5 Nano model ( for dynamic content generation)
 - Azure OpenAI API key and endpoint
 
 ## Quick Setup
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/Azure-Samples/azure-openai-tts-demo.git
-cd azure-openai-tts-demo
+git clone https://github.com/olivMertens/azure-tts-gptaudio-demo.git
+cd azure-tts-gptaudio-demo
 ```
 
 ### 2. Install Dependencies
@@ -215,7 +215,7 @@ response = client.chat.completions.create(
 ## File Structure
 
 ```
-azure-openai-tts-demo/
+azure-tts-gptaudio-demo/
 ├── soundboard.py                    # Main interactive soundboard
 ├── streaming-tts-to-file-sample.py  # File-based TTS example
 ├── async-streaming-tts-sample.py    # Async TTS example
