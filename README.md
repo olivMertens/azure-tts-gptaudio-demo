@@ -1,26 +1,32 @@
-# Azure OpenAI TTS Demo
+# Azure OpenAI- 🎵 **Real-time Audio Generation**: Stream audio directly using Azure OpenAI's gpt-audio model
+- 🔄 **Random Voice Selection**: Automatically select random voices for varied audio experiences
+- 🎧 **High-Quality MP3 Output**: Direct MP3 file generation for professional audio workflows
+- 🌙 **Modern Dark Theme**: Professional dark interface optimized for large viewports with excellent readabilityS Demo
 
-A comprehensive demonstration of Azure OpenAI's GPT-Audio text-to-speech capabilities using the latest `gpt-audio` model with chat completions API. This demo includes an interactive soundboard with multiple voice options, vibe selection, and random content generation.
+A comprehensive demonstration of Azure OpenAI's GPT-Audio text-to-speech capabilities using the latest `gpt-audio` model with chat completions API. This demo features a modern dark-themed interface with an interactive soundboard, multiple voice options, vibe selection, and AI-powered random content generation using GPT-5 Nano.
 
-![Azure OpenAI TTS Soundboard](assets/aoai-tts-soundboard.gif)
+![Azure OpenAI TTS Soundboard](assets/gptaudio-demorepo.gif)
 
 ## Features
 
 - 🎤 **11 Voice Options**: Choose from Alloy, Ash, Ballad, Coral, Echo, Fable, Nova, Onyx, Sage, Shimmer, and Verse
 - 🎭 **Vibe System**: Select different content vibes (Confident, Excited, Friendly, etc.)
-- 🎲 **Random Content Generation**: Generate creative content for different scenarios:
-  - Children's stories
-  - Financial reports  
-  - Technical podcasts
+- 🤖 **AI-Powered Content Generation**: Dynamic content creation using GPT-5 Nano for three scenarios:
+  - 🧸 Children's stories with moral lessons
+  - 📊 Professional financial reports  
+  - 🎧 Engaging technology podcasts
 - 🎵 **Real-time Audio Generation**: Stream audio directly using Azure OpenAI's gpt-audio model
 - 🔄 **Random Voice Selection**: Automatically select random voices for varied audio experiences
-- 🎨 **Clean, Professional UI**: Modern, responsive interface built with Gradio
+- � **Modern Dark Theme**: Professional dark interface optimized for large viewports with excellent readability
+- 📱 **Fully Responsive Design**: Scales beautifully from mobile to 4K displays
+- 🎨 **Glassmorphism UI**: Modern design with backdrop blur effects and smooth animations
 
 ## Prerequisites
 
 - Python 3.8+
 - Azure OpenAI Service subscription
 - Access to the `gpt-audio` model (requires approval)
+- Access to GPT-5 Nano model (optional, for dynamic content generation)
 - Azure OpenAI API key and endpoint
 
 ## Quick Setup
@@ -47,7 +53,10 @@ AZURE_OPENAI_ENDPOINT=https://your-resource-name.cognitiveservices.azure.com/
 AZURE_OPENAI_API_VERSION=2025-01-01-preview
 AZURE_OPENAI_DEPLOYMENT_NAME=your-gpt-audio-deployment-name
 
-# Optional: For random content generation
+# Optional: GPT-5 Nano for dynamic content generation
+AZURE_OPENAI_NANO_DEPLOYMENT_NAME=gpt-5-nano
+
+# Legacy: For fallback text generation (if GPT-5 Nano not available)
 AZURE_OPENAI_TEXT_ENDPOINT=https://your-text-resource.cognitiveservices.azure.com/
 AZURE_OPENAI_TEXT_API_KEY=your_text_api_key_here
 AZURE_OPENAI_TEXT_DEPLOYMENT_NAME=your-gpt-text-deployment-name
@@ -66,7 +75,12 @@ AZURE_OPENAI_TEXT_API_VERSION=2024-12-01-preview
    - Create new deployment with model `gpt-audio` (requires approval)
    - Note your deployment name
 
-3. **API Version**:
+3. **Deploy GPT-5 Nano (Optional)**:
+   - In Azure OpenAI Studio, create a deployment with `gpt-5-nano`
+   - This enables dynamic AI-generated content for the random generator
+   - If not available, the app will use fallback static content
+
+4. **API Version**:
    - Use `2025-01-01-preview` for gpt-audio model
    - Use `2024-12-01-preview` for text generation models
 
@@ -85,6 +99,15 @@ This launches a web interface at `http://127.0.0.1:7860`
 python streaming-tts-to-file-sample.py
 ```
 
+**MP3 File Generation:**
+The application generates audio in MP3 format directly from Azure OpenAI's GPT-Audio model. All generated audio files are automatically created as high-quality MP3s suitable for:
+- Direct playback in web browsers
+- Download and offline listening
+- Integration with other audio applications
+- Professional audio workflows
+
+The streaming audio generation ensures efficient MP3 creation with optimal file sizes and quality.
+
 **Async Streaming TTS:**
 ```bash
 python async-streaming-tts-sample.py
@@ -92,15 +115,29 @@ python async-streaming-tts-sample.py
 
 ## Usage Guide
 
-### Soundboard Interface
+### Soundboard Interface (Dark Theme)
 
-1. **Select Voice**: Click any voice button (Alloy, Ash, Ballad, etc.) to select it
-2. **Choose Vibe**: Select a content vibe that matches your desired tone
-3. **Add Content**: 
+The interface features a modern dark theme optimized for large viewports with excellent readability:
+
+1. **Select Voice**: Click any voice button to select it (highlighted in red when active)
+2. **Choose Vibe**: Select a content vibe that matches your desired tone (highlighted in purple when active)
+3. **Generate Content**: 
    - Use existing script text, or
-   - Click "🎪 Generate Random Content" for AI-generated content
-4. **Generate Audio**: Click "🎵 Generate Audio" to create speech
+   - Click "🎪 Generate Random Content" for AI-generated content using GPT-5 Nano
+   - Each click randomly generates one of three content types:
+     - 🧸 **Children's Story**: Warm, educational tales with moral lessons
+     - 📊 **Financial Report**: Professional business presentations
+     - 🎧 **Tech Podcast**: Conversational technology discussions
+4. **Generate Audio**: Click "🎵 Generate Audio" to create speech with your selected voice and content
 5. **Random Selection**: Use "🎲 Random Voice" to automatically pick a voice
+
+### Dark Theme Features
+
+- **Full Viewport**: Utilizes entire screen space for immersive experience
+- **High Contrast**: White text on dark backgrounds for excellent readability
+- **Smooth Animations**: Professional hover effects and transitions
+- **Glassmorphism**: Semi-transparent panels with backdrop blur effects
+- **Responsive Grid**: Adapts from 6 columns on large screens to mobile-friendly layouts
 
 ### Voice Options
 
@@ -130,6 +167,27 @@ Choose from various vibes to set the right tone:
 - **Unfriendly**: Cold and distant
 - **Cheerful**: Happy and upbeat
 - **Sad**: Melancholic and somber
+
+### AI-Powered Content Generation
+
+The "🎪 Generate Random Content" button uses GPT-5 Nano to create dynamic, fresh content:
+
+**🧸 Children's Stories**
+- Warm, educational tales with clear moral lessons
+- Child-friendly language optimized for TTS
+- Engaging characters and simple narratives
+
+**📊 Financial Reports**
+- Professional quarterly business summaries
+- Realistic metrics, percentages, and data
+- Authoritative tone suitable for investor presentations
+
+**🎧 Tech Podcasts**
+- Conversational discussions about emerging technology
+- Informative yet engaging podcast-style content
+- Natural speaking patterns with enthusiasm and examples
+
+Each click generates completely new content using AI, ensuring variety and freshness in your audio testing.
 
 ## API Configuration
 
@@ -189,8 +247,15 @@ pip install --upgrade gradio
 
 **3. Model Access Issues**
 - GPT-Audio requires special approval from Azure
-- Contact Azure support to request access
-- Verify model deployment name matches your configuration
+- GPT-5 Nano may not be available in all regions
+- Contact Azure support to request access to both models
+- Verify model deployment names match your configuration
+- If GPT-5 Nano is unavailable, content generation will use static fallback content
+
+**4. Content Generation Issues**
+- If GPT-5 Nano content generation fails, the app automatically falls back to static content
+- Check console logs for GPT-5 Nano availability messages
+- Verify `AZURE_OPENAI_NANO_DEPLOYMENT_NAME` environment variable is set correctly
 
 **4. Audio Generation Fails**
 - Check if your text content is appropriate (no harmful content)
