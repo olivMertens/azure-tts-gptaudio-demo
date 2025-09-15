@@ -705,8 +705,7 @@ async def generate_random_content():
                     "content": selected_use_case["prompt"]
                 }
             ],
-            max_tokens=500,
-            temperature=0.8
+
         )
         
         generated_content = response.choices[0].message.content.strip()
