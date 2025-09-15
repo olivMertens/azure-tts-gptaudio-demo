@@ -8,7 +8,7 @@ import tempfile
 import time
 import numpy as np
 from dotenv import load_dotenv
-from openai import AsyncAzureOpenAI
+from openai import AzureOpenAI
 
 load_dotenv()
 
@@ -23,8 +23,7 @@ VOICES = ["alloy", "ash", "ballad", "cedar", "coral", "echo", "marin", "sage", "
 # Create temporary directory to store audio files
 temp_dir = tempfile.mkdtemp()
 
-#openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-azure = AsyncAzureOpenAI(
+azure = AzureOpenAI(
     azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
     api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2025-01-01-preview"),
@@ -712,8 +711,8 @@ async def generate_random_content():
         # Randomly select one of the available use cases
         selected_use_case = random.choice(use_cases)
         
-        # Generate content using GPT-5 Nano via Azure OpenAI
-        response = await azure.chat.completions.create(
+        print ("Generate content using GPT-5 Nano via Azure OpenAI....")
+        response = azure.chat.completions.create(
             model=os.getenv("AZURE_OPENAI_NANO_DEPLOYMENT_NAME", "gpt-5-nano"),
             messages=[
                 {
@@ -724,8 +723,7 @@ async def generate_random_content():
                     "role": "user", 
                     "content": selected_use_case["prompt"]
                 }
-            ],
-
+            ]
         )
         
         generated_content = response.choices[0].message.content.strip()
