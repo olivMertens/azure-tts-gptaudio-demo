@@ -3,10 +3,11 @@
 A comprehensive demonstration of Azure OpenAI's GPT-Audio text-to-speech capabilities using the latest `gpt-audio` model with chat completions API. This demo features a modern dark-themed interface with an interactive soundboard, multiple voice options, vibe selection, and AI-powered random content generation using GPT-5 Nano.
 
 <!-- GitHub supports direct video links that auto-embed as players -->
+
 ![Azure TTS GPTAudio Demo](assets/gptaudio-demorepo.gif)
 
 <!-- Alternative: If you have an MP4, you can also use: -->
-<!-- 
+<!--
 Upload your MP4 to GitHub Issues/Discussions as an attachment, then copy the URL:
 ![Demo Video](https://user-images.githubusercontent.com/your-video-url.mp4)
 
@@ -20,7 +21,7 @@ Or use the assets folder approach:
 - 🎭 **Vibe System**: Select different content vibes (Confident, Excited, Friendly, etc.)
 - 🤖 **AI-Powered Content Generation**: Dynamic content creation using GPT-5 Nano for three scenarios:
   - 🧸 Children's stories with moral lessons
-  - 📊 Professional financial reports  
+  - 📊 Professional financial reports
   - 🎧 Engaging technology podcasts
 - 🎵 **Real-time Audio Generation**: Stream audio directly using Azure OpenAI's gpt-audio model
 - 🔄 **Random Voice Selection**: Automatically select random voices for varied audio experiences
@@ -39,19 +40,28 @@ Or use the assets folder approach:
 ## Quick Setup
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/olivMertens/azure-tts-gptaudio-demo.git
 cd azure-tts-gptaudio-demo
 ```
 
 ### 2. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
+or
+uv pip install -r requirements.txt
 ```
 
 ### 3. Configure Environment Variables
 
 Create a `.env` file in the root directory:
+if you have provisionned using azd, simply run
+
+```
+azd env get-values > .env
+```
 
 ```env
 # Azure OpenAI Configuration
@@ -73,16 +83,19 @@ AZURE_OPENAI_TEXT_API_VERSION=2024-12-01-preview
 #### Getting Your Azure OpenAI Credentials:
 
 1. **Create Azure OpenAI Resource**:
+
    - Go to [Azure Portal](https://portal.azure.com)
    - Create a new "Azure OpenAI" resource
    - Note the endpoint URL and get API keys from "Keys and Endpoint" section
 
 2. **Deploy GPT-Audio Model**:
+
    - In Azure OpenAI Studio, go to "Deployments"
    - Create new deployment with model `gpt-audio` (requires approval)
    - Note your deployment name
 
 3. **Deploy GPT-5 Nano (Optional)**:
+
    - In Azure OpenAI Studio, create a deployment with `gpt-5-nano`
    - This enables dynamic AI-generated content for the random generator
    - If not available, the app will use fallback static content
@@ -94,20 +107,36 @@ AZURE_OPENAI_TEXT_API_VERSION=2024-12-01-preview
 ### 4. Run the Application
 
 #### Interactive Soundboard (Recommended)
+
 ```bash
 python soundboard.py
 ```
+
+or
+
+```
+uv run soundboard.py
+```
+
 This launches a web interface at `http://127.0.0.1:7860`
 
 #### Command Line Examples
 
 **Streaming TTS to File:**
+
 ```bash
 python streaming-tts-to-file-sample.py
 ```
 
+or
+
+```
+uv run streaming-tts-to-file-sample.py
+```
+
 **MP3 File Generation:**
 The application generates audio in MP3 format directly from Azure OpenAI's GPT-Audio model. All generated audio files are automatically created as high-quality MP3s suitable for:
+
 - Direct playback in web browsers
 - Download and offline listening
 - Integration with other audio applications
@@ -116,8 +145,15 @@ The application generates audio in MP3 format directly from Azure OpenAI's GPT-A
 The streaming audio generation ensures efficient MP3 creation with optimal file sizes and quality.
 
 **Async Streaming TTS:**
+
 ```bash
 python async-streaming-tts-sample.py
+```
+
+or
+
+```bash
+uv run async-streaming-tts-sample.py
 ```
 
 ## Usage Guide
@@ -128,7 +164,7 @@ The interface features a modern dark theme optimized for large viewports with ex
 
 1. **Select Voice**: Click any voice button to select it (highlighted in red when active)
 2. **Choose Vibe**: Select a content vibe that matches your desired tone (highlighted in purple when active)
-3. **Generate Content**: 
+3. **Generate Content**:
    - Use existing script text, or
    - Click "🎪 Generate Random Content" for AI-generated content using GPT-5 Nano
    - Each click randomly generates one of three content types:
@@ -148,25 +184,26 @@ The interface features a modern dark theme optimized for large viewports with ex
 
 ### Voice Options
 
-| Voice | Characteristics |
-|-------|----------------|
-| **Alloy** | Balanced, natural tone |
-| **Ash** | Clear, professional |
-| **Ballad** | Melodic, storytelling |
-| **Coral** | Warm, engaging |
-| **Echo** | Resonant, authoritative |
-| **Fable** | Narrative, expressive |
-| **Nova** | Bright, energetic |
-| **Onyx** | Deep, confident |
-| **Sage** | Wise, measured |
-| **Shimmer** | Light, pleasant |
-| **Verse** | Rhythmic, poetic |
+| Voice       | Characteristics         |
+| ----------- | ----------------------- |
+| **Alloy**   | Balanced, natural tone  |
+| **Ash**     | Clear, professional     |
+| **Ballad**  | Melodic, storytelling   |
+| **Coral**   | Warm, engaging          |
+| **Echo**    | Resonant, authoritative |
+| **Fable**   | Narrative, expressive   |
+| **Nova**    | Bright, energetic       |
+| **Onyx**    | Deep, confident         |
+| **Sage**    | Wise, measured          |
+| **Shimmer** | Light, pleasant         |
+| **Verse**   | Rhythmic, poetic        |
 
 ### Content Vibes
 
 Choose from various vibes to set the right tone:
+
 - **Confident**: Professional and assured delivery
-- **Excited**: Energetic and enthusiastic 
+- **Excited**: Energetic and enthusiastic
 - **Friendly**: Warm and approachable
 - **Shouting**: Loud and attention-grabbing
 - **Whispering**: Soft and intimate
@@ -180,16 +217,19 @@ Choose from various vibes to set the right tone:
 The "🎪 Generate Random Content" button uses GPT-5 Nano to create dynamic, fresh content:
 
 **🧸 Children's Stories**
+
 - Warm, educational tales with clear moral lessons
 - Child-friendly language optimized for TTS
 - Engaging characters and simple narratives
 
 **📊 Financial Reports**
+
 - Professional quarterly business summaries
 - Realistic metrics, percentages, and data
 - Authoritative tone suitable for investor presentations
 
 **🎧 Tech Podcasts**
+
 - Conversational discussions about emerging technology
 - Informative yet engaging podcast-style content
 - Natural speaking patterns with enthusiasm and examples
@@ -216,6 +256,7 @@ response = client.chat.completions.create(
 ```
 
 ### Required API Versions
+
 - **GPT-Audio**: `2025-01-01-preview`
 - **Text Models**: `2024-12-01-preview`
 
@@ -241,6 +282,7 @@ azure-tts-gptaudio-demo/
 ### Common Issues
 
 **1. Module Not Found Errors**
+
 ```bash
 # Install missing dependencies
 pip install python-multipart
@@ -248,11 +290,13 @@ pip install --upgrade gradio
 ```
 
 **2. API Authentication Errors**
+
 - Verify your API key and endpoint in `.env`
 - Ensure your Azure OpenAI resource has the gpt-audio model deployed
 - Check API version compatibility
 
 **3. Model Access Issues**
+
 - GPT-Audio requires special approval from Azure
 - GPT-5 Nano may not be available in all regions
 - Contact Azure support to request access to both models
@@ -260,16 +304,19 @@ pip install --upgrade gradio
 - If GPT-5 Nano is unavailable, content generation will use static fallback content
 
 **4. Content Generation Issues**
+
 - If GPT-5 Nano content generation fails, the app automatically falls back to static content
 - Check console logs for GPT-5 Nano availability messages
 - Verify `AZURE_OPENAI_NANO_DEPLOYMENT_NAME` environment variable is set correctly
 
 **4. Audio Generation Fails**
+
 - Check if your text content is appropriate (no harmful content)
 - Verify voice parameter is valid
 - Ensure API quota is not exceeded
 
 ### Dependencies Conflicts
+
 ```bash
 # Upgrade conflicting packages
 pip install --upgrade fastapi starlette
@@ -279,13 +326,17 @@ pip install --upgrade gradio
 ## Development
 
 ### Adding New Voices
+
 Update the `VOICES` list in `soundboard.py`:
+
 ```python
 VOICES = ["alloy", "ash", "ballad", "coral", "echo", "fable", "nova", "onyx", "sage", "shimmer", "verse", "new_voice"]
 ```
 
 ### Adding New Vibes
+
 Edit `vibe.json` to add new content vibes:
+
 ```json
 {
   "new_vibe": {
@@ -296,6 +347,7 @@ Edit `vibe.json` to add new content vibes:
 ```
 
 ### Customizing UI
+
 Modify the CSS section in `soundboard.py` to customize the appearance.
 
 ## Contributing
@@ -313,6 +365,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Support
 
 For issues and questions:
+
 - Check the troubleshooting section above
 - Review Azure OpenAI documentation
 - Submit issues on GitHub
