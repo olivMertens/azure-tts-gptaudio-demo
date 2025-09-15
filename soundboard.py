@@ -638,9 +638,8 @@ footer {
 brand_theme = gr.themes.Soft(
     primary_hue="blue", 
     secondary_hue="slate", 
-    neutral_hue="slate", 
-    font=["Inter", "Segoe UI", "Arial", "sans-serif"], 
-    font_mono=["Courier New", "monospace"]).set(
+    neutral_hue="slate"
+).set(
         # Dark theme colors
         button_primary_background_fill="linear-gradient(135deg, #dc2626, #ef4444)", 
         button_primary_background_fill_hover="linear-gradient(135deg, #b91c1c, #dc2626)", 

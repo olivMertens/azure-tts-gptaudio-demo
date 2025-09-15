@@ -2,7 +2,17 @@
 
 A comprehensive demonstration of Azure OpenAI's GPT-Audio text-to-speech capabilities using the latest `gpt-audio` model with chat completions API. This demo features a modern dark-themed interface with an interactive soundboard, multiple voice options, vibe selection, and AI-powered random content generation using GPT-5 Nano.
 
-<img src="assets/gptaudio-demorepo.gif" alt="Azure TTS GPTAudio Demo" width="800" />
+<!-- GitHub supports direct video links that auto-embed as players -->
+![Azure TTS GPTAudio Demo](assets/gptaudio-demorepo.gif)
+
+<!-- Alternative: If you have an MP4, you can also use: -->
+<!-- 
+Upload your MP4 to GitHub Issues/Discussions as an attachment, then copy the URL:
+![Demo Video](https://user-images.githubusercontent.com/your-video-url.mp4)
+
+Or use the assets folder approach:
+<img src="assets/gptaudio-demorepo.mp4" width="800" alt="Azure TTS GPTAudio Demo" />
+-->
 
 ## Features
 
