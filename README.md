@@ -1,11 +1,8 @@
-# Azure OpenAI- 🎵 **Real-time Audio Generation**: Stream audio directly using Azure OpenAI's gpt-audio model
-- 🔄 **Random Voice Selection**: Automatically select random voices for varied audio experiences
-- 🎧 **High-Quality MP3 Output**: Direct MP3 file generation for professional audio workflows
-- 🌙 **Modern Dark Theme**: Professional dark interface optimized for large viewports with excellent readabilityS Demo
+# Azure TTS GPTAudio Demo
 
 A comprehensive demonstration of Azure OpenAI's GPT-Audio text-to-speech capabilities using the latest `gpt-audio` model with chat completions API. This demo features a modern dark-themed interface with an interactive soundboard, multiple voice options, vibe selection, and AI-powered random content generation using GPT-5 Nano.
 
-<img src="assets/gptaudio-demorepo.gif" alt="Azure OpenAI TTS Soundboard" width="800" />
+<img src="assets/gptaudio-demorepo.gif" alt="Azure TTS GPTAudio Demo" width="800" />
 
 ## Features
 
