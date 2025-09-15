@@ -1,113 +1,251 @@
-# Azure OpenAI GPT-4o Mini TTS Demo
+# Azure OpenAI TTS Demo
 
-A demo project for experimenting with the Azure OpenAI GPT-4o Mini TTS (Text-to-Speech) API. Includes a Gradio-powered soundboard UI and sample scripts for generating speech from text using a variety of voices and vibes.
+A comprehensive demonstration of Azure OpenAI's GPT-Audio text-to-speech capabilities using the latest `gpt-audio` model with chat completions API. This demo includes an interactive soundboard with multiple voice options, vibe selection, and random content generation.
 
-![AOAI TTS Soundboard](assets/aoai-tts-soundboard.gif)
+![Azure OpenAI TTS Soundboard](assets/aoai-tts-soundboard.gif)
 
 ## Features
 
-- Interactive Gradio soundboard to try different voices and vibes
-- Sample scripts for streaming and saving TTS audio
-- Easily configurable for your Azure OpenAI resource
+- 🎤 **11 Voice Options**: Choose from Alloy, Ash, Ballad, Coral, Echo, Fable, Nova, Onyx, Sage, Shimmer, and Verse
+- 🎭 **Vibe System**: Select different content vibes (Confident, Excited, Friendly, etc.)
+- 🎲 **Random Content Generation**: Generate creative content for different scenarios:
+  - Children's stories
+  - Financial reports  
+  - Technical podcasts
+- 🎵 **Real-time Audio Generation**: Stream audio directly using Azure OpenAI's gpt-audio model
+- 🔄 **Random Voice Selection**: Automatically select random voices for varied audio experiences
+- 🎨 **Clean, Professional UI**: Modern, responsive interface built with Gradio
 
-## Getting Started
-
-### Prerequisites
+## Prerequisites
 
 - Python 3.8+
-- An Azure OpenAI resource created in `eastus2` with GPT-4o Mini TTS model deployed as a Global Standard deployment type
+- Azure OpenAI Service subscription
+- Access to the `gpt-audio` model (requires approval)
+- Azure OpenAI API key and endpoint
 
-### Deploy GPT-4o Mini TTS Model with Azure AI Foundry
-Quickly deploy the GPT-4o Mini TTS model:
-1. Sign in to the [Azure AI Foundry portal](https://ai.azure.com/).
-2. Navigate to **Catalog**, filter by **Azure OpenAI**, and select `gpt-4o-mini-tts`.
-3. Click **Deploy**, choose or create your resource, and enter a deployment name.
+## Quick Setup
 
-Click **Deploy** again to finalize.
-
-For detailed instructions, see the [full deployment guide](https://learn.microsoft.com/en-us/azure/ai-foundry/how-to/deploy-models-openai).
-
-### Installation
-
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/Azure-Samples/azure-openai-tts-demo.git
-   cd azure-openai-tts-demo
-   ```
-2. Create and activate a virtual environment:
-   ```sh
-   python -m venv .venv
-   source .venv/bin/activate
-   ```
-3. Install dependencies:
-   ```sh
-   pip install -r requirements.txt
-   ```
-
-### Configuration
-
-1. Copy `.env.example` to `.env` and fill in your Azure OpenAI endpoint and API key:
-   ```sh
-   cp .env.example .env
-   # Edit .env with your values
-   ```
-   Example:
-   ```env
-   AZURE_OPENAI_ENDPOINT="https://<your-resource-name>.openai.azure.com/"
-   AZURE_OPENAI_API_KEY="your-azure-openai-api-key"
-   AZURE_OPENAI_API_VERSION="2025-03-01-preview"
-   ```
-
-## Running the Demo
-
-### Gradio Soundboard UI
-
-To launch the interactive soundboard:
-
-```sh
-python soundboard.py
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Azure-Samples/azure-openai-tts-demo.git
+cd azure-openai-tts-demo
 ```
 
-- Select a voice and vibe, then click Play to generate and listen to speech.
+### 2. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-### Sample Scripts
+### 3. Configure Environment Variables
 
-- `streaming-tts-to-file-sample.py`: Streams TTS audio to a file.
-- `async-streaming-tts-sample.py`: Streams and plays TTS audio asynchronously.
+Create a `.env` file in the root directory:
 
-Run a sample script with:
-```sh
+```env
+# Azure OpenAI Configuration
+AZURE_OPENAI_API_KEY=your_azure_openai_api_key_here
+AZURE_OPENAI_ENDPOINT=https://your-resource-name.cognitiveservices.azure.com/
+AZURE_OPENAI_API_VERSION=2025-01-01-preview
+AZURE_OPENAI_DEPLOYMENT_NAME=your-gpt-audio-deployment-name
+
+# Optional: For random content generation
+AZURE_OPENAI_TEXT_ENDPOINT=https://your-text-resource.cognitiveservices.azure.com/
+AZURE_OPENAI_TEXT_API_KEY=your_text_api_key_here
+AZURE_OPENAI_TEXT_DEPLOYMENT_NAME=your-gpt-text-deployment-name
+AZURE_OPENAI_TEXT_API_VERSION=2024-12-01-preview
+```
+
+#### Getting Your Azure OpenAI Credentials:
+
+1. **Create Azure OpenAI Resource**:
+   - Go to [Azure Portal](https://portal.azure.com)
+   - Create a new "Azure OpenAI" resource
+   - Note the endpoint URL and get API keys from "Keys and Endpoint" section
+
+2. **Deploy GPT-Audio Model**:
+   - In Azure OpenAI Studio, go to "Deployments"
+   - Create new deployment with model `gpt-audio` (requires approval)
+   - Note your deployment name
+
+3. **API Version**:
+   - Use `2025-01-01-preview` for gpt-audio model
+   - Use `2024-12-01-preview` for text generation models
+
+### 4. Run the Application
+
+#### Interactive Soundboard (Recommended)
+```bash
+python soundboard.py
+```
+This launches a web interface at `http://127.0.0.1:7860`
+
+#### Command Line Examples
+
+**Streaming TTS to File:**
+```bash
 python streaming-tts-to-file-sample.py
 ```
 
-## Resources
+**Async Streaming TTS:**
+```bash
+python async-streaming-tts-sample.py
+```
 
-- [Azure OpenAI Service Documentation](https://aka.ms/oai/docs)
-- [Blog Announcement](https://placeholder)
+## Usage Guide
 
-## Responsible Use and Content Requirements
+### Soundboard Interface
 
-When using this soundboard or any output generated by it, you **must** comply with the [Microsoft Enterprise AI Services Code of Conduct](https://learn.microsoft.com/en-us/legal/ai-code-of-conduct), including but not limited to:
+1. **Select Voice**: Click any voice button (Alloy, Ash, Ballad, etc.) to select it
+2. **Choose Vibe**: Select a content vibe that matches your desired tone
+3. **Add Content**: 
+   - Use existing script text, or
+   - Click "🎪 Generate Random Content" for AI-generated content
+4. **Generate Audio**: Click "🎵 Generate Audio" to create speech
+5. **Random Selection**: Use "🎲 Random Voice" to automatically pick a voice
 
-- **Disclosure:** Clearly disclose when audio is AI-generated. Do not mislead others into believing the synthetic voice is a real person or attributable to a specific individual without their consent.
-- **Prohibited Uses:** Do not use this tool or its output to:
-  - Deceive, impersonate, or misinform others.
-  - Generate or distribute harmful, illegal, or abusive content (including hate speech, violence, harassment, or sexually explicit material).
-  - Attempt to infer or simulate sensitive personal attributes or emotional states.
-  - Create chatbots for erotic, romantic, or impersonation purposes.
-  - Violate any applicable law or regulation.
-- **Human Oversight:** Ensure appropriate human oversight and do not use the tool for consequential decisions affecting legal, financial, or human rights.
-- **Content Rights:** You are responsible for ensuring you have the rights to any content you input and for the responsible use of all output.
-- **Feedback and Abuse:** Provide a way for users to report abuse or issues with generated content.
+### Voice Options
 
-For the full list of requirements and restrictions, see the [Microsoft Enterprise AI Services Code of Conduct](https://learn.microsoft.com/en-us/legal/ai-code-of-conduct).
+| Voice | Characteristics |
+|-------|----------------|
+| **Alloy** | Balanced, natural tone |
+| **Ash** | Clear, professional |
+| **Ballad** | Melodic, storytelling |
+| **Coral** | Warm, engaging |
+| **Echo** | Resonant, authoritative |
+| **Fable** | Narrative, expressive |
+| **Nova** | Bright, energetic |
+| **Onyx** | Deep, confident |
+| **Sage** | Wise, measured |
+| **Shimmer** | Light, pleasant |
+| **Verse** | Rhythmic, poetic |
+
+### Content Vibes
+
+Choose from various vibes to set the right tone:
+- **Confident**: Professional and assured delivery
+- **Excited**: Energetic and enthusiastic 
+- **Friendly**: Warm and approachable
+- **Shouting**: Loud and attention-grabbing
+- **Whispering**: Soft and intimate
+- **Terrified**: Dramatic and fearful
+- **Unfriendly**: Cold and distant
+- **Cheerful**: Happy and upbeat
+- **Sad**: Melancholic and somber
+
+## API Configuration
+
+### GPT-Audio Model Setup
+
+The demo uses Azure OpenAI's `gpt-audio` model via the Chat Completions API:
+
+```python
+# Example API call structure
+response = client.chat.completions.create(
+    model="gpt-audio",  # Your deployment name
+    modalities=["text", "audio"],
+    audio={"voice": "alloy", "format": "mp3"},
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Your text to convert to speech"}
+    ]
+)
+```
+
+### Required API Versions
+- **GPT-Audio**: `2025-01-01-preview`
+- **Text Models**: `2024-12-01-preview`
+
+## File Structure
+
+```
+azure-openai-tts-demo/
+├── soundboard.py                    # Main interactive soundboard
+├── streaming-tts-to-file-sample.py  # File-based TTS example
+├── async-streaming-tts-sample.py    # Async TTS example
+├── vibe.json                        # Vibe configurations
+├── requirements.txt                 # Python dependencies
+├── .env.example                     # Environment template
+├── .gitignore                      # Git ignore rules
+└── assets/                         # UI assets and icons
+    ├── ai_studio_icon_color.png
+    ├── aoai-tts-soundboard.gif
+    └── *.svg
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**1. Module Not Found Errors**
+```bash
+# Install missing dependencies
+pip install python-multipart
+pip install --upgrade gradio
+```
+
+**2. API Authentication Errors**
+- Verify your API key and endpoint in `.env`
+- Ensure your Azure OpenAI resource has the gpt-audio model deployed
+- Check API version compatibility
+
+**3. Model Access Issues**
+- GPT-Audio requires special approval from Azure
+- Contact Azure support to request access
+- Verify model deployment name matches your configuration
+
+**4. Audio Generation Fails**
+- Check if your text content is appropriate (no harmful content)
+- Verify voice parameter is valid
+- Ensure API quota is not exceeded
+
+### Dependencies Conflicts
+```bash
+# Upgrade conflicting packages
+pip install --upgrade fastapi starlette
+pip install --upgrade gradio
+```
+
+## Development
+
+### Adding New Voices
+Update the `VOICES` list in `soundboard.py`:
+```python
+VOICES = ["alloy", "ash", "ballad", "coral", "echo", "fable", "nova", "onyx", "sage", "shimmer", "verse", "new_voice"]
+```
+
+### Adding New Vibes
+Edit `vibe.json` to add new content vibes:
+```json
+{
+  "new_vibe": {
+    "description": "Your vibe description",
+    "script": "Sample script content"
+  }
+}
+```
+
+### Customizing UI
+Modify the CSS section in `soundboard.py` to customize the appearance.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
 ## License
 
-MIT License. See [LICENSE.md](LICENSE.md) for details.
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Support
+
+For issues and questions:
+- Check the troubleshooting section above
+- Review Azure OpenAI documentation
+- Submit issues on GitHub
+- Contact Azure support for API access questions
 
 ---
 
-**Disclaimer:**
-
-This project is for educational and personal use only. It is not affiliated with, endorsed by, or officially supported by OpenAI or Microsoft. This project was inspired by OpenAI's [openai.fm](https://openai.fm) interactive site, which is an interactive demo for developers to try the new text-to-speech model in the OpenAI API. This demo sample's sole purpose was lovingly inspired by openai.fm's interactive demo to help developers understand the API and how to use these models within the context of Azure OpenAI Service.
+**Note**: This demo requires access to Azure OpenAI's `gpt-audio` model, which is currently in preview and requires approval. Make sure you have proper access before setting up the demo.

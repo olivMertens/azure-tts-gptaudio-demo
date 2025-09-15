@@ -1,4 +1,5 @@
 gradio
 openai
 openai[voice_helpers]
+python-multipart
 python-dotenv
