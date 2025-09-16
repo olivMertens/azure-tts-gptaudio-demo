@@ -7,6 +7,9 @@ import io
 import tempfile
 import time
 import numpy as np
+import logging
+from collections import deque
+from datetime import datetime
 from dotenv import load_dotenv
 from openai import AzureOpenAI
 
@@ -17,21 +20,50 @@ is_playing = False
 current_voice = "alloy"
 current_vibe = None
 
+# Telemetry and logging setup
+log_buffer = deque(maxlen=100)  # Store last 100 log entries
+telemetry_visible = False
+
+class TelemetryHandler(logging.Handler):
+    """Custom logging handler that captures logs for display in the UI"""
+    def emit(self, record):
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_entry = f"[{timestamp}] [{record.levelname}] {record.getMessage()}"
+        log_buffer.append(log_entry)
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+telemetry_handler = TelemetryHandler()
+logger.addHandler(telemetry_handler)
+
+# Add some initial logs
+logger.info("Application started")
+logger.info("Telemetry system initialized")
+
 # Available voices for the gpt-audio model
 VOICES = ["alloy", "ash", "ballad", "cedar", "coral", "echo", "marin", "sage", "shimmer", "verse"]
 
 # Create temporary directory to store audio files
 temp_dir = tempfile.mkdtemp()
 
-azure = AzureOpenAI(
-    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
-    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
-    api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2025-01-01-preview"),
-)
+# Initialize Azure OpenAI client - handle missing credentials gracefully
+azure = None
+try:
+    azure = AzureOpenAI(
+        azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+        api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+        api_version=os.getenv("AZURE_OPENAI_API_VERSION", "2025-01-01-preview"),
+    )
+    logger.info("Azure OpenAI client initialized successfully")
+except Exception as e:
+    logger.warning(f"Azure OpenAI client initialization failed: {e}")
+    logger.info("Running in demo mode without Azure OpenAI functionality")
 
 def update_voice(selected_voice):
     global current_voice
     current_voice = selected_voice.lower()
+    logger.info(f"Voice selection changed to: {selected_voice}")
     return selected_voice, gr.Button(variant="primary")
 
 def reset_buttons():
@@ -99,6 +131,8 @@ def get_vibe_info(vibe_name):
     return "", ""
 
 def check_api_key():
+    if not azure:
+        raise ValueError("Azure OpenAI client not initialized. Please check your API credentials.")
     api_key = os.getenv("AZURE_OPENAI_API_KEY")
     if not api_key:
         raise ValueError("Azure OpenAI API key not found. Please set the AZURE_OPENAI_API_KEY environment variable.")
@@ -632,6 +666,129 @@ button[data-variant="stop"]:hover, .gradio-button[data-variant="stop"]:hover {
 footer {
     visibility: hidden !important;
 }
+
+/* Telemetry button styling */
+.telemetry-button {
+    background: linear-gradient(135deg, #0891b2, #0ea5e9) !important;
+    color: #ffffff !important;
+    border: 2px solid #0891b2 !important;
+    border-radius: 1rem !important;
+    padding: 0.8rem 1.5rem !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3) !important;
+    cursor: pointer !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.telemetry-button:hover {
+    background: linear-gradient(135deg, #0e7490, #0891b2) !important;
+    border-color: #0e7490 !important;
+    transform: translateY(-2px) scale(1.02) !important;
+    box-shadow: 0 8px 20px rgba(8, 145, 178, 0.4) !important;
+}
+
+.telemetry-button[data-variant="stop"] {
+    background: linear-gradient(135deg, #dc2626, #ef4444) !important;
+    border-color: #dc2626 !important;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3) !important;
+}
+
+.telemetry-button[data-variant="stop"]:hover {
+    background: linear-gradient(135deg, #b91c1c, #dc2626) !important;
+    border-color: #b91c1c !important;
+    box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4) !important;
+}
+
+/* Telemetry panel styling */
+.telemetry-panel {
+    background: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 2px solid rgba(8, 145, 178, 0.3) !important;
+    border-radius: 1.5rem !important;
+    padding: 1.5rem !important;
+    margin: 1rem 0 !important;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+.telemetry-panel h3 {
+    color: #0ea5e9 !important;
+    font-weight: 700 !important;
+    margin-bottom: 1rem !important;
+    font-size: 1.4rem !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+}
+
+/* Log display styling */
+.log-display {
+    background: rgba(0, 0, 0, 0.6) !important;
+    border: 1px solid #374151 !important;
+    border-radius: 0.75rem !important;
+    padding: 1rem !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 0.9rem !important;
+    color: #e5e7eb !important;
+    white-space: pre-wrap !important;
+    max-height: 300px !important;
+    overflow-y: auto !important;
+    line-height: 1.4 !important;
+}
+
+.log-display::-webkit-scrollbar {
+    width: 8px !important;
+}
+
+.log-display::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-radius: 4px !important;
+}
+
+.log-display::-webkit-scrollbar-thumb {
+    background: rgba(8, 145, 178, 0.6) !important;
+    border-radius: 4px !important;
+}
+
+.log-display::-webkit-scrollbar-thumb:hover {
+    background: rgba(8, 145, 178, 0.8) !important;
+}
+
+/* Telemetry controls styling */
+.telemetry-controls {
+    display: flex !important;
+    gap: 1rem !important;
+    margin-top: 1rem !important;
+    flex-wrap: wrap !important;
+}
+
+.telemetry-controls button {
+    background: linear-gradient(135deg, #374151, #4b5563) !important;
+    color: #f3f4f6 !important;
+    border: 1px solid #6b7280 !important;
+    border-radius: 0.5rem !important;
+    padding: 0.5rem 1rem !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+}
+
+.telemetry-controls button:hover {
+    background: linear-gradient(135deg, #4b5563, #6b7280) !important;
+    border-color: #9ca3af !important;
+    transform: translateY(-1px) !important;
+}
+
+.telemetry-controls button:active {
+    transform: translateY(0) !important;
+}
 """
 
 brand_theme = gr.themes.Soft(
@@ -660,14 +817,52 @@ def update_vibe_and_global(vibe, current_vibes):
     """Update the selected vibe and global state"""
     global current_vibe
     current_vibe = vibe
+    logger.info(f"Vibe selection changed to: {vibe}")
     desc, script = get_vibe_info(vibe)
     updated_buttons, updated_state = update_selected_vibe(vibe, current_vibes)
     return (desc, *updated_buttons, updated_state, script)
 
+def toggle_telemetry():
+    """Toggle telemetry panel visibility"""
+    global telemetry_visible
+    telemetry_visible = not telemetry_visible
+    logger.info(f"Telemetry panel {'opened' if telemetry_visible else 'closed'}")
+    
+    # Get current logs as a formatted string
+    logs_text = "\n".join(list(log_buffer)) if log_buffer else "No logs available."
+    
+    return (
+        gr.Column(visible=telemetry_visible),
+        logs_text,
+        gr.Button(
+            "📈 Telemetry" if not telemetry_visible else "❌ Close Telemetry",
+            variant="secondary" if not telemetry_visible else "stop",
+            elem_classes="telemetry-button"
+        )
+    )
+
+def refresh_logs():
+    """Refresh the log display"""
+    logger.info("Logs refreshed by user")
+    logs_text = "\n".join(list(log_buffer)) if log_buffer else "No logs available."
+    return logs_text
+
+def clear_logs():
+    """Clear all logs"""
+    global log_buffer
+    log_buffer.clear()
+    logger.info("Log buffer cleared by user")
+    return "Log buffer cleared.\n"
+
 async def generate_random_content():
     """Generate random audio content using GPT-5 Nano with 3 different use cases"""
     try:
+        if not azure:
+            raise Exception("Azure OpenAI client not initialized")
+            
         import random
+        
+        logger.info("Starting random content generation with GPT-5 Nano")
         
         # Define the use cases for GPT-5 Nano (including multilingual options)
         use_cases = [
@@ -710,6 +905,7 @@ async def generate_random_content():
         
         # Randomly select one of the available use cases
         selected_use_case = random.choice(use_cases)
+        logger.info(f"Selected use case: {selected_use_case['type']}")
         
         print ("Generate content using GPT-5 Nano via Azure OpenAI....")
         response = azure.chat.completions.create(
@@ -727,16 +923,19 @@ async def generate_random_content():
         )
         
         generated_content = response.choices[0].message.content.strip()
+        logger.info("Content generation completed successfully")
         
         return selected_use_case["description"], generated_content
         
     except Exception as e:
         # Fallback to static content if GPT-5 Nano is not available
+        logger.warning(f"GPT-5 Nano not available, using fallback content: {e}")
         print(f"GPT-5 Nano not available, using fallback content: {e}")
         return generate_fallback_content()
 
 def generate_fallback_content():
     """Fallback function with static content when GPT-5 Nano is not available"""
+    logger.info("Using fallback content generation")
     content_scenarios = [
         {
             "type": "kids_story",
@@ -780,6 +979,14 @@ with gr.Blocks(
     with gr.Row():
         with gr.Column():
             voice_label = gr.Label("Current Voice: Alloy", show_label=False, container=False)
+        with gr.Column():
+            # Telemetry button (right-aligned)
+            telemetry_btn = gr.Button(
+                "📈 Telemetry", 
+                variant="secondary", 
+                elem_classes="telemetry-button",
+                icon="assets/ic_fluent_chart_line_24_regular.svg"
+            )
     
     # Voice Buttons
     with gr.Row(elem_classes="voice-buttons"):
@@ -826,6 +1033,37 @@ with gr.Blocks(
     verse.click(lambda: update_button_and_reset("Verse"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
 
     random_btn.click(update_random_button_enhanced, outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
+    
+    # Telemetry Panel
+    with gr.Column(visible=False, elem_classes="telemetry-panel") as telemetry_panel:
+        gr.HTML('<h3>📈 System Telemetry & Logs</h3>')
+        log_display = gr.Textbox(
+            label="Application Logs",
+            value="",
+            lines=12,
+            max_lines=20,
+            interactive=False,
+            elem_classes="log-display"
+        )
+        with gr.Row(elem_classes="telemetry-controls"):
+            refresh_btn = gr.Button("🔄 Refresh", size="sm")
+            clear_btn = gr.Button("🗑️ Clear", size="sm")
+    
+    # Telemetry event handlers
+    telemetry_btn.click(
+        toggle_telemetry,
+        outputs=[telemetry_panel, log_display, telemetry_btn]
+    )
+    
+    refresh_btn.click(
+        refresh_logs,
+        outputs=[log_display]
+    )
+    
+    clear_btn.click(
+        clear_logs,
+        outputs=[log_display]
+    )
     
     # Content Generation Section
     with gr.Row():
@@ -875,6 +1113,7 @@ with gr.Blocks(
         is_playing = True
         try:            
             api_key = check_api_key()
+            logger.info("Audio generation started")
             
             # Use global current_voice if available, otherwise parse from voice_name
             if current_voice:
@@ -883,6 +1122,8 @@ with gr.Blocks(
                 voice_to_use = voice_name.replace("Voice: ", "").strip().lower()
             else:
                 voice_to_use = "alloy"  # default voice
+            
+            logger.info(f"Using voice: {voice_to_use}")
             
             if not voice_to_use:
                 raise ValueError("Invalid voice name. Please select a valid voice.")
@@ -895,12 +1136,15 @@ with gr.Blocks(
             description_to_use = vibe_desc if vibe_desc and vibe_desc.strip() else "Custom content"
             vibe_name = current_vibe if current_vibe else "custom"
             
+            logger.info(f"Generating audio for content type: {vibe_name}")
+            
             # Create a temporary file path
             temp_file = os.path.join(temp_dir, f"{voice_to_use}_{vibe_name}_{int(time.time())}.mp3")
             
             # Generate and save audio to temp file
             asyncio.run(generate_audio_file(vibe_script, temp_file, voice_to_use, description_to_use))
             
+            logger.info(f"Audio generation completed successfully: {temp_file}")
             gr.Info(f"Audio playing with {voice_to_use.title()} voice...")
             play_btn = gr.Button(value="🎵 Generate Audio", variant="primary", elem_classes="generate-button", visible=False)
             stop_btn = gr.Button(value="⏹️ Stop", variant="stop", visible=True)
@@ -908,6 +1152,7 @@ with gr.Blocks(
             
         except Exception as e:
             is_playing = False
+            logger.error(f"Audio generation failed: {str(e)}")
             play_btn = gr.Button(value="Play", variant="primary", icon=os.path.join("assets", "ic_fluent_play_24_filled.svg"), visible=True)
             stop_btn = gr.Button(value="Stop", variant="stop", icon=os.path.join("assets", "ic_fluent_stop_24_filled.svg"), visible=False)            
             raise gr.Error(f"Error playing audio: {str(e)}")
@@ -916,6 +1161,7 @@ with gr.Blocks(
         """Handle the stop button click"""
         global is_playing
         is_playing = False
+        logger.info("Audio playback stopped by user")
         gr.Info("Audio stopped")
         play_btn = gr.Button(value="🎵 Generate Audio", variant="primary", elem_classes="generate-button", visible=True)
         stop_btn = gr.Button(value="⏹️ Stop", variant="stop", visible=False)
