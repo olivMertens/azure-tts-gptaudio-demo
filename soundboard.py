@@ -35,13 +35,13 @@ def update_voice(selected_voice):
     return selected_voice, gr.Button(variant="primary")
 
 def reset_buttons():
-    return [gr.Button(variant="secondary") for _ in range(11)]
+    return [gr.Button(variant="secondary") for _ in range(10)]
 
 def update_random_button():
     buttons = reset_buttons()
-    random_index = random.randint(0, 10)  # Randomly select one button index
+    random_index = random.randint(0, 9)  # Randomly select one button index (0-9 for 10 voices)
     buttons[random_index] = gr.Button(variant="primary")
-    selected_voice = "Alloy Ash Ballad Coral Echo Fable Nova Onyx Sage Shimmer Verse".split()[random_index]
+    selected_voice = "Alloy Ash Ballad Cedar Coral Echo Marin Sage Shimmer Verse".split()[random_index]
     return f"Voice: {selected_voice}", *buttons
 
 def load_vibes():
@@ -786,11 +786,10 @@ with gr.Blocks(
         alloy = gr.Button("Alloy", variant="primary", elem_classes="voice-button")
         ash = gr.Button("Ash", variant="secondary", icon="assets/ic_fluent_sound_wave_circle_sparkle_24_regular.svg", elem_classes="voice-button")
         ballad = gr.Button("Ballad", variant="secondary", icon="assets/ic_fluent_sound_wave_circle_sparkle_24_regular.svg", elem_classes="voice-button")
+        cedar = gr.Button("Cedar", variant="secondary", icon="assets/ic_fluent_sound_wave_circle_sparkle_24_regular.svg", elem_classes="voice-button")
         coral = gr.Button("Coral", variant="secondary", icon="assets/ic_fluent_sound_wave_circle_sparkle_24_regular.svg", elem_classes="voice-button")
         echo = gr.Button("Echo", variant="secondary", elem_classes="voice-button")
-        fable = gr.Button("Fable", variant="secondary", elem_classes="voice-button")
-        nova = gr.Button("Nova", variant="secondary", elem_classes="voice-button")
-        onyx = gr.Button("Onyx", variant="secondary", elem_classes="voice-button")
+        marin = gr.Button("Marin", variant="secondary", elem_classes="voice-button")
         sage = gr.Button("Sage", variant="secondary", icon="assets/ic_fluent_sound_wave_circle_sparkle_24_regular.svg", elem_classes="voice-button")
         shimmer = gr.Button("Shimmer", variant="secondary", elem_classes="voice-button")
         verse = gr.Button("Verse", variant="secondary", icon="assets/ic_fluent_sound_wave_circle_sparkle_24_regular.svg", elem_classes="voice-button")
@@ -800,32 +799,31 @@ with gr.Blocks(
         global current_voice
         current_voice = selected_voice.lower()
         buttons = reset_buttons()
-        buttons["Alloy Ash Ballad Coral Echo Fable Nova Onyx Sage Shimmer Verse".split().index(selected_voice)] = gr.Button(variant="primary")
+        buttons["Alloy Ash Ballad Cedar Coral Echo Marin Sage Shimmer Verse".split().index(selected_voice)] = gr.Button(variant="primary")
         return f"Current Voice: {selected_voice}", *buttons
 
     def update_random_button_enhanced():
         buttons = reset_buttons()
-        random_index = random.randint(0, 10)  # Randomly select one button index
+        random_index = random.randint(0, 9)  # Randomly select one button index (0-9 for 10 voices)
         buttons[random_index] = gr.Button(variant="primary")
-        selected_voice = "Alloy Ash Ballad Coral Echo Fable Nova Onyx Sage Shimmer Verse".split()[random_index]
+        selected_voice = "Alloy Ash Ballad Cedar Coral Echo Marin Sage Shimmer Verse".split()[random_index]
         global current_voice
         current_voice = selected_voice.lower()
         return f"Current Voice: {selected_voice}", *buttons
 
     # Voice button event handlers
-    alloy.click(lambda: update_button_and_reset("Alloy"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
-    ash.click(lambda: update_button_and_reset("Ash"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
-    ballad.click(lambda: update_button_and_reset("Ballad"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
-    coral.click(lambda: update_button_and_reset("Coral"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
-    echo.click(lambda: update_button_and_reset("Echo"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
-    fable.click(lambda: update_button_and_reset("Fable"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
-    nova.click(lambda: update_button_and_reset("Nova"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
-    onyx.click(lambda: update_button_and_reset("Onyx"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
-    sage.click(lambda: update_button_and_reset("Sage"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
-    shimmer.click(lambda: update_button_and_reset("Shimmer"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
-    verse.click(lambda: update_button_and_reset("Verse"), outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
+    alloy.click(lambda: update_button_and_reset("Alloy"), outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
+    ash.click(lambda: update_button_and_reset("Ash"), outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
+    ballad.click(lambda: update_button_and_reset("Ballad"), outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
+    cedar.click(lambda: update_button_and_reset("Cedar"), outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
+    coral.click(lambda: update_button_and_reset("Coral"), outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
+    echo.click(lambda: update_button_and_reset("Echo"), outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
+    marin.click(lambda: update_button_and_reset("Marin"), outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
+    sage.click(lambda: update_button_and_reset("Sage"), outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
+    shimmer.click(lambda: update_button_and_reset("Shimmer"), outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
+    verse.click(lambda: update_button_and_reset("Verse"), outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
 
-    random_btn.click(update_random_button_enhanced, outputs=[voice_label, alloy, ash, ballad, coral, echo, fable, nova, onyx, sage, shimmer, verse])
+    random_btn.click(update_random_button_enhanced, outputs=[voice_label, alloy, ash, ballad, cedar, coral, echo, marin, sage, shimmer, verse])
     
     # Content Generation Section
     with gr.Row():

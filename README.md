@@ -8,7 +8,7 @@ A comprehensive demonstration of Azure OpenAI's GPT-Audio text-to-speech capabil
 
 ## Features
 
-- 🎤 **11 Voice Options**: Choose from Alloy, Ash, Ballad, Coral, Echo, Fable, Nova, Onyx, Sage, Shimmer, and Verse
+- 🎤 **10 Voice Options**: Choose from Alloy, Ash, Ballad, Cedar, Coral, Echo, Marin, Sage, Shimmer, and Verse
 - 🎭 **Vibe System**: Select different content vibes (Confident, Excited, Friendly, etc.)
 
 - 🤖 **AI-Powered Multilingual Content Generation**: Dynamic content creation using GPT-5 Nano across multiple languages and scenarios:
@@ -189,11 +189,10 @@ The interface features a modern dark theme optimized for large viewports with ex
 | **Alloy**   | Balanced, natural tone  |
 | **Ash**     | Clear, professional     |
 | **Ballad**  | Melodic, storytelling   |
+| **Cedar**   | Warm, conversational    |
 | **Coral**   | Warm, engaging          |
 | **Echo**    | Resonant, authoritative |
-| **Fable**   | Narrative, expressive   |
-| **Nova**    | Bright, energetic       |
-| **Onyx**    | Deep, confident         |
+| **Marin**   | Friendly, approachable  |
 | **Sage**    | Wise, measured          |
 | **Shimmer** | Light, pleasant         |
 | **Verse**   | Rhythmic, poetic        |
@@ -352,7 +351,7 @@ pip install --upgrade gradio
 Update the `VOICES` list in `soundboard.py`:
 
 ```python
-VOICES = ["alloy", "ash", "ballad", "coral", "echo", "fable", "nova", "onyx", "sage", "shimmer", "verse", "new_voice"]
+VOICES = ["alloy", "ash", "ballad", "cedar", "coral", "echo", "marin", "sage", "shimmer", "verse", "new_voice"]
 ```
 
 ### Adding New Vibes
