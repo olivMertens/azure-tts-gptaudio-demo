@@ -21,7 +21,7 @@ A comprehensive demonstration of Azure OpenAI's GPT-Audio text-to-speech capabil
   - 🇲🇦 Moroccan cultural stories (حكايات مغربية)
 - 🎵 **Real-time Audio Generation**: Stream audio directly using Azure OpenAI's gpt-audio model
 - 🔄 **Random Voice Selection**: Automatically select random voices for varied audio experiences
-- � **Modern Dark Theme**: Professional dark interface optimized for large viewports with excellent readability
+- 🌙 **Modern Dark Theme**: Professional dark interface optimized for large viewports with excellent readability
 - 📱 **Fully Responsive Design**: Scales beautifully from mobile to 4K displays
 - 🎨 **Glassmorphism UI**: Modern design with backdrop blur effects and smooth animations
 
